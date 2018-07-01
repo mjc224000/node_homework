@@ -1,5 +1,7 @@
 var orm = require("orm");
+const {generateMixed, tick, parser} = require('./utils')
 const enforce = orm.enforce
+const model = {}, db = {};
 var opts = {
     host: 'mjc224000.top',
     database: 'myhomework',
@@ -9,9 +11,11 @@ var opts = {
     username: 'root',
     password: '7898ikuojl'
 };
+//model
 const user = {id: Number, birth: Number, name: String};
-
-orm.connectAsync(opts).then(function (db) {
+model.user = user;
+//db
+db.User = orm.connectAsync(opts).then(function (db) {
     const User = db.define('user', user, {
         fullName: function () {
             return this.name;
@@ -21,13 +25,11 @@ orm.connectAsync(opts).then(function (db) {
         }
     });
 
-    User.find({}, function (err, data) {
-        data.forEach((v) => {
-            console.log(v.name);
-        });
+    /*   for(var i=0;i<10000;i++){
+           User.create({name:generateMixed(5),birth:1993},function () {
 
-    })
-})
-
-
-module.exports = {};
+           });
+       }*/
+    return User;
+});
+module.exports = {db, model}
