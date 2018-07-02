@@ -18,9 +18,7 @@ class App extends Component {
             updateID: null,
             updateName: null,
         };
-
     }
-
     componentDidMount() {
         this.getData();
     }
@@ -31,7 +29,6 @@ class App extends Component {
             this.setState({data: data.data});
         })
     }
-
     handleCreateSubmit() {
         const {createName, birth} = this.state;
         axios.post(url + 'course', {
