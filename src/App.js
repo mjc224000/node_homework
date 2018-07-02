@@ -15,7 +15,8 @@ class App extends Component {
             createName: '',
             birth: null,
             deleteId: null,
-            updateID:null
+            updateID: null,
+            updateName: null,
         };
 
     }
@@ -38,11 +39,18 @@ class App extends Component {
         }).then(() => {
         }).catch((e) => console.log(111))
     }
- handleDelete(id){
-        axios.delete(url+'course',{params:{id}})
- }
+
+    handleDelete(id) {
+        axios.delete(url + 'course', {params: {id}})
+    }
+
     handleChange(key, e) {
         this.setState({[key]: e.target.value})
+    }
+
+    handleUpdate = () => {
+        const {updateName: name, updateID: id} = this.state
+        axios.put(url + 'course', {name, id}).then(msg => console.log(msg))
     }
 
     render() {
@@ -69,10 +77,16 @@ class App extends Component {
 
                 <p><input type="text" onChange={(e) => this.handleChange('deleteId', e)}
                           value={this.state.deleteId} placeholder={'id'}/>
-                    <button onClick={()=>this.handleDelete(this.state.deleteId)}>删</button>
+                    <button onClick={() => this.handleDelete(this.state.deleteId)}>删</button>
                 </p>
-                <p><input type="text" value={this.state.updateID} onChange={(e)=>this.handleChange('updateID',e)} placeholder={id}/></p>
-                <button onClick={this.handleUpdate.bind(this) } >删</button>
+                <p><input type="text" value={this.state.updateID} onChange={(e) => this.handleChange('updateID', e)}
+                          placeholder={'id'}/>
+                    <input type="text" value={this.state.updateName}
+                           onChange={(e) => this.handleChange('updateName', e)}
+                           placeholder={'name'}/>
+                    <button onClick={this.handleUpdate}>改</button>
+                </p>
+
             </div>
         );
     }

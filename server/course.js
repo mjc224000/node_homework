@@ -33,11 +33,14 @@ router.route('/').get(async function (req, res) {
             res.send('ok');
         }
     })
-}).update(async function (req, res) {
+}).put(async function (req, res) {
     const {id, name} = req.body;
     const User = await db.User;
-    User.find({id}).each((v) => v.name = name).save(function () {
-
+    console.log(id, name);
+    User.find({id}).each((v) => v.name = name).save(function (err) {
+ if(!err){
+     res.send('ok');
+ }
     });
 })
 
